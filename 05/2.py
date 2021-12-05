@@ -31,13 +31,11 @@ for ((sx, sy), (ex, ey)) in spans:
     dy = calc_delta(sy, ey)
     x = sx
     y = sy
-    while x != ex:
+    while x != ex or y != ey:
         add_to_points((x, y))
         x += dx
         y += dy
     add_to_points((x, y))
-    if y != ey:
-        print(f"You goofed! {((sx, sy), (ex, ey), (x, y))}")
 
 two_or_more = sum(v >= 2 for v in points.values())
 print(f"Two or more: {two_or_more}")
