@@ -11,39 +11,33 @@ with open("input.txt") as file:
             print(f"non-matching line: {line}")
 
 points = {}
-
-
 def add_to_points(point):
     if point not in points:
         points[point] = 0
     points[point] += 1
 
 
-for ((sx, sy), (ex, ey)) in spans:
-    if sx == ex:
-        x = sx
-        big = max(sy, ey)
-        small = min(sy, ey)
-        for y in range(small, big + 1):
-            add_to_points((x,y))
-    elif sy == ey:
-        y = sy
-        big = max(sx, ex)
-        small = min(sx, ex)
-        for x in range(small, big + 1):
-            add_to_points((x,y))
+def calc_delta(start, end):
+    if start < end:
+        return 1
+    elif start > end:
+        return -1
     else:
-        dx = 1 if sx < ex else -1
-        dy = 1 if sy < ey else -1
-        x = sx
-        y = sy
-        while x != ex:
-            add_to_points((x, y))
-            x += dx
-            y += dy
+        return 0
+
+
+for ((sx, sy), (ex, ey)) in spans:
+    dx = calc_delta(sx, ex)
+    dy = calc_delta(sy, ey)
+    x = sx
+    y = sy
+    while x != ex:
         add_to_points((x, y))
-        if y != ey:
-            print(f"You goofed! {((sx, sy), (ex, ey), (x, y))}")
+        x += dx
+        y += dy
+    add_to_points((x, y))
+    if y != ey:
+        print(f"You goofed! {((sx, sy), (ex, ey), (x, y))}")
 
 two_or_more = sum(v >= 2 for v in points.values())
 print(f"Two or more: {two_or_more}")
