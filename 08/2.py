@@ -36,7 +36,7 @@ for (inputs, outputs) in puzzles:
     nines = sixes.copy()
     zeroes = sixes.copy()
 
-    # a nine has all of the same segments as a four, and neither six nor nine do
+    # a nine has all of the same segments as a four, and neither six nor zero do
     nine = [input for input in nines if set(four).issubset(set(input))][0]
     sixes.remove(nine)
     zeroes.remove(nine)
