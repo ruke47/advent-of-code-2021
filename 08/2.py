@@ -36,22 +36,28 @@ for (inputs, outputs) in puzzles:
     nines = sixes.copy()
     zeroes = sixes.copy()
 
-    three = [input for input in threes if set(one).issubset(set(input))][0]
-    twos.remove(three)
-    fives.remove(three)
-
+    # a nine has all of the same segments as a four, and neither six nor nine do
     nine = [input for input in nines if set(four).issubset(set(input))][0]
     sixes.remove(nine)
     zeroes.remove(nine)
 
+    # a zero has all of the same segments as a seven, but a six does not
     zero = [input for input in zeroes if set(seven).issubset(set(input))][0]
     sixes.remove(zero)
 
+    # should only be one choice left for six
     six = sixes[0]
 
+    # a three has all of the same segments as a one, and neither two nor five do
+    three = [input for input in threes if set(one).issubset(set(input))][0]
+    twos.remove(three)
+    fives.remove(three)
+
+    # a five is a six with an extra segment, but a two has a segment that a six does not
     five = [input for input in fives if set(input).issubset(set(six))][0]
     twos.remove(five)
 
+    # should only be one choice left for two
     two = twos[0]
 
     mapping = {
